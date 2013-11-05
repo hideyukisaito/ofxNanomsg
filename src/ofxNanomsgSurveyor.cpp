@@ -25,7 +25,17 @@ int ofxNanomsgSurveyor::send(const string &data, bool nonblocking)
     return ofxNanomsgSocket::send(data, nonblocking);
 }
 
+int ofxNanomsgSurveyor::send(const ofBuffer &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::send(data, nonblocking);
+}
+
 bool ofxNanomsgSurveyor::receive(string &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::receive(data, nonblocking);
+}
+
+bool ofxNanomsgSurveyor::receive(ofBuffer &data, bool nonblocking)
 {
     return ofxNanomsgSocket::receive(data, nonblocking);
 }

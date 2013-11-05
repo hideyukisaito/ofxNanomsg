@@ -12,5 +12,6 @@ public:
     
     int bind(string addr);
     
-    bool receive(string &data, bool nonblocking);
+    bool receive(string &data, bool nonblocking = false);
+    bool receive(ofBuffer &data, bool nonblocking);
 };

@@ -12,8 +12,8 @@ public:
     
     int connect(string addr);
     
-    bool receive(string &data, bool nonblocking);
-    bool receive(ofBuffer &data, bool nonblocking);
+    bool receive(string &data, bool nonblocking = false);
+    bool receive(ofBuffer &data, bool nonblocking = false);
     
     void subscribe(string topic);
     void unsubscribe(string topic);

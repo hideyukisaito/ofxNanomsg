@@ -39,7 +39,17 @@ int ofxNanomsgBus::send(const string &data, bool nonblocking)
     return ofxNanomsgSocket::send(data, nonblocking);
 }
 
+int ofxNanomsgBus::send(const ofBuffer &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::send(data, nonblocking);
+}
+
 bool ofxNanomsgBus::receive(string &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::receive(data, nonblocking);
+}
+
+bool ofxNanomsgBus::receive(ofBuffer &data, bool nonblocking)
 {
     return ofxNanomsgSocket::receive(data, nonblocking);
 }

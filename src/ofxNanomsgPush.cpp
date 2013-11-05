@@ -24,3 +24,8 @@ int ofxNanomsgPush::send(const string &data, bool nonblocking)
 {
     return ofxNanomsgSocket::send(data, nonblocking);
 }
+
+int ofxNanomsgPush::send(const ofBuffer &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::send(data, nonblocking);
+}
