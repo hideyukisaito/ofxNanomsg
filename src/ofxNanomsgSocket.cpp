@@ -18,6 +18,26 @@ ofxNanomsgSocket & ofxNanomsgSocket::operator=(const ofxNanomsgSocket &mom)
     
 }
 
+bool ofxNanomsgSocket::shutdown()
+{
+    try
+    {
+        socket.shutdown(eid);
+    }
+    catch (nn::exception &e)
+    {
+        ofLog(OF_LOG_ERROR, "ofxNanomsgSocket::bind: %s", e.what());
+        return false;
+    }
+    
+    return true;
+}
+
+bool ofxNanomsgSocket::isConnected()
+{
+    return 0 <= eid;
+}
+
 void ofxNanomsgSocket::setLinger(int millis, int socklevel)
 {
     setSocketOption(socklevel, NN_LINGER, &millis, sizeof(millis));
@@ -72,21 +92,6 @@ int ofxNanomsgSocket::connect(string addr)
     }
     
     return rc;
-}
-
-bool ofxNanomsgSocket::shutdown()
-{
-    try
-    {
-        socket.shutdown(eid);
-    }
-    catch (nn::exception &e)
-    {
-        ofLog(OF_LOG_ERROR, "ofxNanomsgSocket::bind: %s", e.what());
-        return false;
-    }
-    
-    return true;
 }
 
 void ofxNanomsgSocket::setSocketOption(int level, int option, const void *optval, size_t optvallen)
@@ -157,7 +162,7 @@ bool ofxNanomsgSocket::receive(string &data, bool nonblocking)
             const char *src = (const char*)buf;
             
             data.insert(data.end(), src, src + bytes);
-            nn_freemsg(buf);
+            nn::freemsg(buf);
             
             return true;
         }
@@ -190,7 +195,7 @@ bool ofxNanomsgSocket::receive(ofBuffer &data, bool nonblocking)
             ss.write(src, bytes);
             
             data.set(ss);
-            nn_freemsg(buf);
+            nn::freemsg(buf);
             
             return true;
         }
@@ -206,9 +211,14 @@ bool ofxNanomsgSocket::receive(ofBuffer &data, bool nonblocking)
     }
 }
 
-bool ofxNanomsgSocket::isConnected()
+bool ofxNanomsgSocket::getNextMessage(string &data, bool nonblocking)
 {
-    return 0 <= eid;
+    return receive(data, nonblocking);
+}
+
+bool ofxNanomsgSocket::getNextMessage(ofBuffer &data, bool nonblocking)
+{
+    return receive(data, nonblocking);
 }
 
 void ofxNanomsgSocket::setSendBufferSize(int kb, int socklevel)

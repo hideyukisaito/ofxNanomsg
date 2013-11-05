@@ -35,6 +35,16 @@ bool ofxNanomsgSurveyor::receive(string &data, bool nonblocking)
     return ofxNanomsgSocket::receive(data, nonblocking);
 }
 
+bool ofxNanomsgSurveyor::getNextMessage(string &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::getNextMessage(data, nonblocking);
+}
+
+bool ofxNanomsgSurveyor::getNextMessage(ofBuffer &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::getNextMessage(data, nonblocking);
+}
+
 bool ofxNanomsgSurveyor::receive(ofBuffer &data, bool nonblocking)
 {
     return ofxNanomsgSocket::receive(data, nonblocking);

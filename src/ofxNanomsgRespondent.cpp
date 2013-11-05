@@ -39,3 +39,13 @@ bool ofxNanomsgRespondent::receive(ofBuffer &data, bool nonblocking)
 {
     return ofxNanomsgSocket::receive(data, nonblocking);
 }
+
+bool ofxNanomsgRespondent::getNextMessage(string &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::getNextMessage(data, nonblocking);
+}
+
+bool ofxNanomsgRespondent::getNextMessage(ofBuffer &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::getNextMessage(data, nonblocking);
+}

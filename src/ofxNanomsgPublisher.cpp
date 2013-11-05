@@ -32,10 +32,10 @@ int ofxNanomsgPublisher::send(const ofBuffer &data, bool nonblocking)
 
 int ofxNanomsgPublisher::send(const string &topic, const string &data, bool nonblocking)
 {
-    ofxNanomsgSocket::send(topic + " " + data, nonblocking);
+    return ofxNanomsgSocket::send(topic + " " + data, nonblocking);
 }
 
 int ofxNanomsgPublisher::send(const string &topic, const ofBuffer &data, bool nonblocking)
 {
-    ofxNanomsgSocket::send(topic + " " + data.getBinaryBuffer(), nonblocking);
+    return ofxNanomsgSocket::send(topic + " " + data.getBinaryBuffer(), nonblocking);
 }

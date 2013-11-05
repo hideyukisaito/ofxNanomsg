@@ -30,6 +30,26 @@ int ofxNanomsgRepuest::send(const ofBuffer &data, bool nonblocking)
     return ofxNanomsgSocket::send(data, nonblocking);
 }
 
+bool ofxNanomsgRepuest::receive(string &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::receive(data, nonblocking);
+}
+
+bool ofxNanomsgRepuest::receive(ofBuffer &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::receive(data, nonblocking);
+}
+
+bool ofxNanomsgRepuest::getNextMessage(string &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::getNextMessage(data, nonblocking);
+}
+
+bool ofxNanomsgRepuest::getNextMessage(ofBuffer &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::getNextMessage(data, nonblocking);
+}
+
 void ofxNanomsgRepuest::setResendInterval(int millis)
 {
     ofxNanomsgSocket::setSocketOption(NN_REQ, NN_REQ_RESEND_IVL, &millis, sizeof(millis));

@@ -41,10 +41,10 @@ protected:
     bool receive(string &data, bool nonblocking);
     bool receive(ofBuffer &data, bool nonblocking);
     
-    bool hasWaitingMessage(long timeout_millis = 0);
+    bool hasWaitingMessage();
 	
-	bool getNextMessage(string &data);
-	bool getNextMessage(ofBuffer &data);
+	bool getNextMessage(string &data, bool nonblocking);
+	bool getNextMessage(ofBuffer &data, bool nonblocking);
     
     void setSendBufferSize(int kb, int socklevel = NN_SOL_SOCKET);
     void setReceiveBufferSize(int kb, int socklevel = NN_SOL_SOCKET);

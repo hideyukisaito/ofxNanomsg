@@ -20,3 +20,13 @@ bool ofxNanomsgPull::receive(ofBuffer &data, bool nonblocking)
 {
     return ofxNanomsgSocket::receive(data, nonblocking);
 }
+
+bool ofxNanomsgPull::getNextMessage(string &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::getNextMessage(data, nonblocking);
+}
+
+bool ofxNanomsgPull::getNextMessage(ofBuffer &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::getNextMessage(data, nonblocking);
+}

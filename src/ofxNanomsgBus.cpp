@@ -53,3 +53,13 @@ bool ofxNanomsgBus::receive(ofBuffer &data, bool nonblocking)
 {
     return ofxNanomsgSocket::receive(data, nonblocking);
 }
+
+bool ofxNanomsgBus::getNextMessage(string &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::getNextMessage(data, nonblocking);
+}
+
+bool ofxNanomsgBus::getNextMessage(ofBuffer &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::getNextMessage(data, nonblocking);
+}

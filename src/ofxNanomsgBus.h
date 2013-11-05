@@ -21,5 +21,8 @@ public:
     int send(const ofBuffer &data, bool nonblocking = false);
     
     bool receive(string &data, bool nonblocking = false);
-    bool receive(ofBuffer &data, bool nonblocking);
+    bool receive(ofBuffer &data, bool nonblocking = false);
+    
+    bool getNextMessage(string &data, bool nonblocking = false);
+	bool getNextMessage(ofBuffer &data, bool nonblocking = false);
 };

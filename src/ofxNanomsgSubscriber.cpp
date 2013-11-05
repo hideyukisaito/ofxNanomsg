@@ -20,6 +20,16 @@ bool ofxNanomsgSubscriber::receive(ofBuffer &data, bool nonblocking)
     return ofxNanomsgSocket::receive(data, nonblocking);
 }
 
+bool ofxNanomsgSubscriber::getNextMessage(string &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::getNextMessage(data, nonblocking);
+}
+
+bool ofxNanomsgSubscriber::getNextMessage(ofBuffer &data, bool nonblocking)
+{
+    return ofxNanomsgSocket::getNextMessage(data, nonblocking);
+}
+
 void ofxNanomsgSubscriber::subscribe(string topic)
 {
     ofxNanomsgSocket::setSocketOption(NN_SUB, NN_SUB_SUBSCRIBE, topic.data(), topic.size());
