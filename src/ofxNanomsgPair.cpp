@@ -5,6 +5,11 @@ ofxNanomsgPair::ofxNanomsgPair() : ofxNanomsgSocket(AF_SP, NN_PAIR)
     
 }
 
+ofxNanomsgPair::~ofxNanomsgPair()
+{
+    ofxNanomsgSocket::shutdown();
+}
+
 int ofxNanomsgPair::bind(string addr)
 {
     return ofxNanomsgSocket::bind(addr);

@@ -9,6 +9,7 @@ class ofxNanomsgSurveyor : public ofxNanomsgSocket
 public:
 
     ofxNanomsgSurveyor();
+    ~ofxNanomsgSurveyor();
     
     int bind(string addr);
     

@@ -9,6 +9,7 @@ class ofxNanomsgReply : public ofxNanomsgSocket
 public:
     
     ofxNanomsgReply();
+    ~ofxNanomsgReply();
     
     int bind(string addr);
     

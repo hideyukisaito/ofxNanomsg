@@ -8,8 +8,9 @@ class ofxNanomsgSocket
     
 public:
     
+    virtual ~ofxNanomsgSocket();
+    
     ofxNanomsgSocket & operator=(const ofxNanomsgSocket& mom);
-    ~ofxNanomsgSocket();
     
     bool shutdown();
     

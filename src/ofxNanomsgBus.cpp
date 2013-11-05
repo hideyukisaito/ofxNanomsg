@@ -6,6 +6,11 @@ ofxNanomsgBus::ofxNanomsgBus() : ofxNanomsgSocket(AF_SP, NN_BUS)
     
 }
 
+ofxNanomsgBus::~ofxNanomsgBus()
+{
+    ofxNanomsgSocket::shutdown();
+}
+
 int ofxNanomsgBus::bind(string addr)
 {
     return ofxNanomsgSocket::bind(addr);

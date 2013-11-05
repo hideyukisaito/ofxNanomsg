@@ -5,6 +5,11 @@ ofxNanomsgReply::ofxNanomsgReply() : ofxNanomsgSocket(AF_SP, NN_REP)
     
 }
 
+ofxNanomsgReply::~ofxNanomsgReply()
+{
+    ofxNanomsgSocket::shutdown();
+}
+
 int ofxNanomsgReply::bind(string addr)
 {
     return ofxNanomsgSocket::bind(addr);

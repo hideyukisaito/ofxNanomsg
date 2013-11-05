@@ -10,7 +10,7 @@ ofxNanomsgSocket::ofxNanomsgSocket(int domain, int protocol) : socket(domain, pr
 
 ofxNanomsgSocket::~ofxNanomsgSocket()
 {
-    shutdown();
+    
 }
 
 ofxNanomsgSocket & ofxNanomsgSocket::operator=(const ofxNanomsgSocket &mom)
@@ -26,7 +26,7 @@ bool ofxNanomsgSocket::shutdown()
     }
     catch (nn::exception &e)
     {
-        ofLog(OF_LOG_ERROR, "ofxNanomsgSocket::bind: %s", e.what());
+        ofLog(OF_LOG_ERROR, "ofxNanomsgSocket::shutdown: %s", e.what());
         return false;
     }
     

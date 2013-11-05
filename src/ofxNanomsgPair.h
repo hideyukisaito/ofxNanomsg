@@ -9,6 +9,7 @@ class ofxNanomsgPair : public ofxNanomsgSocket
 public:
 
     ofxNanomsgPair();
+    ~ofxNanomsgPair();
     
     int bind(string addr);
     int connect(string addr);

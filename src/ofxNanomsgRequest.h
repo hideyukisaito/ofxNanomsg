@@ -9,6 +9,7 @@ class ofxNanomsgRepuest : public ofxNanomsgSocket
 public:
     
     ofxNanomsgRepuest();
+    ~ofxNanomsgRepuest();
     
     int connect(string addr);
     

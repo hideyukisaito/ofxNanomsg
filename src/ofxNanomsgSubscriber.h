@@ -9,6 +9,7 @@ class ofxNanomsgSubscriber : public ofxNanomsgSocket
 public:
     
     ofxNanomsgSubscriber();
+    ~ofxNanomsgSubscriber();
     
     int connect(string addr);
     

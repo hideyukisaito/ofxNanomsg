@@ -10,6 +10,7 @@ class ofxNanomsgBus : public ofxNanomsgSocket
 public:
 
     ofxNanomsgBus();
+    ~ofxNanomsgBus();
     
     int bind(string addr);
     int connect(string addr);

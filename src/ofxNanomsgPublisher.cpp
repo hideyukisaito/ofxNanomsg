@@ -5,6 +5,11 @@ ofxNanomsgPublisher::ofxNanomsgPublisher() : ofxNanomsgSocket(AF_SP, NN_PUB)
     
 }
 
+ofxNanomsgPublisher::~ofxNanomsgPublisher()
+{
+    ofxNanomsgSocket::shutdown();
+}
+
 int ofxNanomsgPublisher::bind(string addr)
 {
     return ofxNanomsgSocket::bind(addr);

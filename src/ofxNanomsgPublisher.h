@@ -9,6 +9,7 @@ class ofxNanomsgPublisher : public ofxNanomsgSocket
 public:
     
     ofxNanomsgPublisher();
+    ~ofxNanomsgPublisher();
     
     int bind(string addr);
     

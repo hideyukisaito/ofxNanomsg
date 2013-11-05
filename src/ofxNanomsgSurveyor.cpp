@@ -5,6 +5,11 @@ ofxNanomsgSurveyor::ofxNanomsgSurveyor() : ofxNanomsgSocket(AF_SP, NN_SURVEYOR)
     
 }
 
+ofxNanomsgSurveyor::~ofxNanomsgSurveyor()
+{
+    ofxNanomsgSocket::shutdown();
+}
+
 int ofxNanomsgSurveyor::bind(string addr)
 {
     return ofxNanomsgSocket::bind(addr);

@@ -5,6 +5,11 @@ ofxNanomsgSubscriber::ofxNanomsgSubscriber() : ofxNanomsgSocket(AF_SP, NN_SUB)
     
 }
 
+ofxNanomsgSubscriber::~ofxNanomsgSubscriber()
+{
+    ofxNanomsgSocket::shutdown();
+}
+
 int ofxNanomsgSubscriber::connect(string addr)
 {
     return ofxNanomsgSocket::connect(addr);

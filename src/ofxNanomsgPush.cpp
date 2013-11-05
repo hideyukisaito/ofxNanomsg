@@ -5,6 +5,11 @@ ofxNanomsgPush::ofxNanomsgPush() : ofxNanomsgSocket(AF_SP, NN_PUSH)
     
 }
 
+ofxNanomsgPush::~ofxNanomsgPush()
+{
+    ofxNanomsgSocket::shutdown();
+}
+
 int ofxNanomsgPush::connect(string addr)
 {
     return ofxNanomsgSocket::connect(addr);

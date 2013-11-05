@@ -9,6 +9,7 @@ class ofxNanomsgPush : public ofxNanomsgSocket
 public:
     
     ofxNanomsgPush();
+    ~ofxNanomsgPush();
     
     int connect(string addr);
     
