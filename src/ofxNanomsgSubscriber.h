@@ -17,8 +17,4 @@ public:
     
     void subscribe(string topic);
     void unsubscribe(string topic);
-    
-protected:
-
-    void setSocketOptions(int level, int option, const void *optval, size_t optvallen);
 };

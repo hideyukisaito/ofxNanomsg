@@ -11,23 +11,27 @@ public:
     ofxNanomsgSocket & operator=(const ofxNanomsgSocket& mom);
     ~ofxNanomsgSocket();
     
-    void setLinger(int millis, int socklevel=NN_SOL_SOCKET);
-    void setReconnectionInterval(int millis, int socklevel=NN_SOL_SOCKET);
-    void setMaxReconnectionInterval(int millis, int socklevel=NN_SOL_SOCKET);
-    void setUseIPV6(bool value, int socklevel=NN_SOL_SOCKET);
+    bool shutdown();
+    
+    bool isConnected();
+    
+    void setLinger(int millis, int socklevel = NN_SOL_SOCKET);
+    void setReconnectionInterval(int millis, int socklevel = NN_SOL_SOCKET);
+    void setMaxReconnectionInterval(int millis, int socklevel = NN_SOL_SOCKET);
+    void setUseIPV6(bool value, int socklevel = NN_SOL_SOCKET);
     
 protected:
     
     nn::socket socket;
+    int eid;
     
     ofxNanomsgSocket(int domain, int protocol);
     
     int bind(string addr);
     int connect(string addr);
-    bool shutdown(int how);
     
-    void setSocketOptions(int level, int option, const void *optval,
-                    size_t optvallen);
+    void setSocketOption(int level, int option, const void *optval, size_t optvallen);
+    void getSocketOption(int level, int option, void *optval, size_t *optvallen);
     
     int send(const void *data, size_t len, bool nonblocking);
     int send(void *data, size_t len, bool nonblocking);
@@ -42,9 +46,9 @@ protected:
 	bool getNextMessage(string &data);
 	bool getNextMessage(ofBuffer &data);
     
-    void setSendBufferSize(int kb, int socklevel=NN_SOL_SOCKET);
-    void setReceiveBufferSize(int kb, int socklevel=NN_SOL_SOCKET);
-    void setSendTimeout(int millis, int socklevel=NN_SOL_SOCKET);
-    void setReceiveTimeout(int millis, int socklevel=NN_SOL_SOCKET);
-    void setSendPriority(int priority, int socklevel=NN_SOL_SOCKET);
+    void setSendBufferSize(int kb, int socklevel = NN_SOL_SOCKET);
+    void setReceiveBufferSize(int kb, int socklevel = NN_SOL_SOCKET);
+    void setSendTimeout(int millis, int socklevel = NN_SOL_SOCKET);
+    void setReceiveTimeout(int millis, int socklevel = NN_SOL_SOCKET);
+    void setSendPriority(int priority, int socklevel = NN_SOL_SOCKET);
 };

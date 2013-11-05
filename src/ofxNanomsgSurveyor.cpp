@@ -42,5 +42,5 @@ bool ofxNanomsgSurveyor::receive(ofBuffer &data, bool nonblocking)
 
 void ofxNanomsgSurveyor::setTimeout(int millis)
 {
-    ofxNanomsgSocket::setSocketOptions(NN_SURVEYOR, NN_SURVEYOR_DEADLINE, &millis, sizeof(millis));
+    ofxNanomsgSocket::setSocketOption(NN_SURVEYOR, NN_SURVEYOR_DEADLINE, &millis, sizeof(millis));
 }

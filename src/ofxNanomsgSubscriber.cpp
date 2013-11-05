@@ -22,15 +22,10 @@ bool ofxNanomsgSubscriber::receive(ofBuffer &data, bool nonblocking)
 
 void ofxNanomsgSubscriber::subscribe(string topic)
 {
-    ofxNanomsgSocket::setSocketOptions(NN_SUB, NN_SUB_SUBSCRIBE, topic.data(), topic.size());
+    ofxNanomsgSocket::setSocketOption(NN_SUB, NN_SUB_SUBSCRIBE, topic.data(), topic.size());
 }
 
 void ofxNanomsgSubscriber::unsubscribe(string topic)
 {
-    setSocketOptions(NN_SUB, NN_SUB_UNSUBSCRIBE, topic.data(), topic.size());
-}
-
-void ofxNanomsgSubscriber::setSocketOptions(int level, int option, const void *optval, size_t optvallen)
-{
-    ofxNanomsgSocket::setSocketOptions(level, option, optval, optvallen);
+    ofxNanomsgSocket::setSocketOption(NN_SUB, NN_SUB_UNSUBSCRIBE, topic.data(), topic.size());
 }

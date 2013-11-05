@@ -32,5 +32,5 @@ int ofxNanomsgRepuest::send(const ofBuffer &data, bool nonblocking)
 
 void ofxNanomsgRepuest::setResendInterval(int millis)
 {
-    ofxNanomsgSocket::setSocketOptions(NN_REQ, NN_REQ_RESEND_IVL, &millis, sizeof(millis));
+    ofxNanomsgSocket::setSocketOption(NN_REQ, NN_REQ_RESEND_IVL, &millis, sizeof(millis));
 }

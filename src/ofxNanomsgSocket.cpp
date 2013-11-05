@@ -10,7 +10,7 @@ ofxNanomsgSocket::ofxNanomsgSocket(int domain, int protocol) : socket(domain, pr
 
 ofxNanomsgSocket::~ofxNanomsgSocket()
 {
-    
+    shutdown();
 }
 
 ofxNanomsgSocket & ofxNanomsgSocket::operator=(const ofxNanomsgSocket &mom)
@@ -20,23 +20,23 @@ ofxNanomsgSocket & ofxNanomsgSocket::operator=(const ofxNanomsgSocket &mom)
 
 void ofxNanomsgSocket::setLinger(int millis, int socklevel)
 {
-    setSocketOptions(socklevel, NN_LINGER, &millis, sizeof(millis));
+    setSocketOption(socklevel, NN_LINGER, &millis, sizeof(millis));
 }
 
 void ofxNanomsgSocket::setReconnectionInterval(int socklevel, int millis)
 {
-    setSocketOptions(socklevel, NN_RECONNECT_IVL, &millis, sizeof(millis));
+    setSocketOption(socklevel, NN_RECONNECT_IVL, &millis, sizeof(millis));
 }
 
 void ofxNanomsgSocket::setMaxReconnectionInterval(int socklevel, int millis)
 {
-    setSocketOptions(socklevel, NN_RECONNECT_IVL_MAX, &millis, sizeof(millis));
+    setSocketOption(socklevel, NN_RECONNECT_IVL_MAX, &millis, sizeof(millis));
 }
 
 void ofxNanomsgSocket::setUseIPV6(bool value, int socklevel)
 {
     int val = value ? 0 : 1;
-    setSocketOptions(socklevel, NN_IPV4ONLY, &val, 1);
+    setSocketOption(socklevel, NN_IPV4ONLY, &val, 1);
 }
 
 
@@ -48,6 +48,7 @@ int ofxNanomsgSocket::bind(string addr)
     try
     {
         rc = socket.bind(addr.c_str());
+        eid = rc;
     }
     catch (nn::exception &e)
     {
@@ -63,6 +64,7 @@ int ofxNanomsgSocket::connect(string addr)
     try
     {
         rc = socket.connect(addr.c_str());
+        eid = rc;
     }
     catch (nn::exception &e)
     {
@@ -72,11 +74,11 @@ int ofxNanomsgSocket::connect(string addr)
     return rc;
 }
 
-bool ofxNanomsgSocket::shutdown(int how)
+bool ofxNanomsgSocket::shutdown()
 {
     try
     {
-        socket.shutdown(how);
+        socket.shutdown(eid);
     }
     catch (nn::exception &e)
     {
@@ -87,7 +89,7 @@ bool ofxNanomsgSocket::shutdown(int how)
     return true;
 }
 
-void ofxNanomsgSocket::setSocketOptions(int level, int option, const void *optval, size_t optvallen)
+void ofxNanomsgSocket::setSocketOption(int level, int option, const void *optval, size_t optvallen)
 {
     try
     {
@@ -95,7 +97,19 @@ void ofxNanomsgSocket::setSocketOptions(int level, int option, const void *optva
     }
     catch (nn::exception &e)
     {
-        ofLog(OF_LOG_ERROR, "ofxNanomsgSocket::setSockopt: %s", e.what());
+        ofLog(OF_LOG_ERROR, "ofxNanomsgSocket::setSocketOption: %s", e.what());
+    }
+}
+
+void ofxNanomsgSocket::getSocketOption(int level, int option, void *optval, size_t *optvallen)
+{
+    try
+    {
+        socket.getsockopt(level, option, optval, optvallen);
+    }
+    catch (nn::exception &e)
+    {
+        ofLog(OF_LOG_ERROR, "ofxNanomsgSocket::getSocketOption: %s", e.what());
     }
 }
 
@@ -133,21 +147,18 @@ bool ofxNanomsgSocket::receive(string &data, bool nonblocking)
 {
 	data.clear();
     
-	void *buf = NULL;
-    
-	int bytes;
-    try
+	try
     {
-        bytes = socket.recv(&buf, NN_MSG, nonblocking ? NN_DONTWAIT : 0);
+        void *buf = NULL;
+        int bytes = socket.recv(&buf, NN_MSG, nonblocking ? NN_DONTWAIT : 0);
+        
         if (0 < bytes)
         {
-            string str = string((char *)buf);
+            const char *src = (const char*)buf;
             
-            const int numBytes = str.size();
-            const uint8_t *src = (uint8_t*)str.data();
-            
-            data.insert(data.end(), src, src + numBytes);
+            data.insert(data.end(), src, src + bytes);
             nn_freemsg(buf);
+            
             return true;
         }
         else
@@ -164,28 +175,22 @@ bool ofxNanomsgSocket::receive(string &data, bool nonblocking)
 
 bool ofxNanomsgSocket::receive(ofBuffer &data, bool nonblocking)
 {
-    int32_t more = 0;
-	size_t more_size = sizeof(more);
-	
 	data.clear();
-	
-	stringstream ss;
-    void *buf = NULL;
 	
     try
     {
+        void *buf = NULL;
         int bytes = socket.recv(&buf, NN_MSG, nonblocking ? NN_DONTWAIT : 0);
         
         if (0 < bytes)
         {
-            string str = string((char *)buf);
-            
-            const int numBytes = str.size();
             const char *src = (const char*)buf;
-            ofLog() << "src = " << (const char*)buf;
-            ss.write(src, numBytes);
+            
+            stringstream ss;
+            ss.write(src, bytes);
             
             data.set(ss);
+            nn_freemsg(buf);
             
             return true;
         }
@@ -201,27 +206,32 @@ bool ofxNanomsgSocket::receive(ofBuffer &data, bool nonblocking)
     }
 }
 
+bool ofxNanomsgSocket::isConnected()
+{
+    return 0 <= eid;
+}
+
 void ofxNanomsgSocket::setSendBufferSize(int kb, int socklevel)
 {
-    setSocketOptions(socklevel, NN_SNDBUF, &kb, sizeof(kb));
+    setSocketOption(socklevel, NN_SNDBUF, &kb, sizeof(kb));
 }
 
 void ofxNanomsgSocket::setReceiveBufferSize(int kb, int socklevel)
 {
-    setSocketOptions(socklevel, NN_RCVBUF, &kb, sizeof(kb));
+    setSocketOption(socklevel, NN_RCVBUF, &kb, sizeof(kb));
 }
 
 void ofxNanomsgSocket::setSendTimeout(int millis, int socklevel)
 {
-    setSocketOptions(socklevel, NN_SNDTIMEO, &millis, sizeof(millis));
+    setSocketOption(socklevel, NN_SNDTIMEO, &millis, sizeof(millis));
 }
 
 void ofxNanomsgSocket::setReceiveTimeout(int millis, int socklevel)
 {
-    setSocketOptions(socklevel, NN_RCVTIMEO, &millis, sizeof(millis));
+    setSocketOption(socklevel, NN_RCVTIMEO, &millis, sizeof(millis));
 }
 
 void ofxNanomsgSocket::setSendPriority(int priority, int socklevel)
 {
-    setSocketOptions(socklevel, NN_SNDPRIO, &priority, sizeof(priority));
+    setSocketOption(socklevel, NN_SNDPRIO, &priority, sizeof(priority));
 }
